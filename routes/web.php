@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PostsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,5 @@ use App\Http\Controllers\BlogController;
 
 
 Route::get('/', [BlogController::class, 'index'], );
+
+Route::resource('posts', PostsController::class);
