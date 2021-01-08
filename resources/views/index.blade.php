@@ -47,7 +47,7 @@
         <br>
         <!-- Search Widget -->
         <div class="card my-4">
-          <button type="button" class="btn btn-primary btn-lg">Добавить пост</button>
+          <a class="btn btn-primary btn-lg" href="{{route('posts.create') }}">Добавить пост</a>
         </div>
 
 
