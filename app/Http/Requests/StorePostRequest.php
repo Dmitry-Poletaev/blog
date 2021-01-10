@@ -36,6 +36,7 @@ class StorePostRequest extends FormRequest
             'author.required' => 'Укажите имя!',
             'title.required' => 'Укажите заголовок!',
             'title.max' => 'Заголовок слишком большой!',
+            'title.unique' => 'Заголовок должен быть уникальным!',
             'body.required' => 'Пост не может быть пустым!',
         ];
     }

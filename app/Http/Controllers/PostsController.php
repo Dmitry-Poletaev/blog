@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
+use App\Models\Comment;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 
@@ -63,7 +65,11 @@ class PostsController extends Controller
     {
         $post = Post::where('slug',$slug)->first();
 
-        return view('blog.show', compact('post'));
+        $comments = Comment::where('post_id',$post->id)->orderBy('created_at','desc')->paginate(10);
+
+        return view('blog.show', compact('post', 'comments'));
+
+ 
     }
 
     /**
@@ -74,7 +80,9 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::where('id',$id)->first();
+
+        return view('blog.edit',compact('post'));
     }
 
     /**
@@ -84,9 +92,19 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorePostRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $post = Post::find($id);
+        $post->title = $request->input('title');
+        $post->author = $request->get('author');
+        $post->slug = Str::slug($post->title);
+        $post->body = $request->input('body');
+        $post->save();
+
+        return redirect('posts/' . $post->slug)->with('success', 'Пост успешно изменен!');
+
     }
 
     /**
@@ -97,12 +115,6 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
-
-        $post->delete();
-
-          Session::flash('successaction', 'This post was successfully deleted.');
-
-        return redirect()->route('/');
+        //
     }
 }

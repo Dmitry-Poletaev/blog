@@ -16,9 +16,8 @@ use App\Http\Controllers\CommentsController;
 |
 */
 
+Route::resource('posts', PostsController::class);
 
 Route::get('/', [BlogController::class, 'index'], );
-
-Route::resource('posts', PostsController::class);
 
 Route::post('/comment/create', [CommentsController::class, 'store'])->name('comment.store');
